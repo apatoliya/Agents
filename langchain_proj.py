@@ -1,5 +1,4 @@
 import os 
-import langchain_openai
 from dotenv import load_dotenv
 
 # Load environment variables
