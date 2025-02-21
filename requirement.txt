@@ -4,6 +4,8 @@ langchain-openai
 ipykernel
 langchain_openai
 langchain-core
-
+langchain-community
+bs4
+faiss-cpu
 
 
