@@ -8,5 +8,7 @@ langchain-community
 bs4
 faiss-cpu
 langchain-text-splitters
+langchain-groq
+langchain_groq
 
 
