@@ -31,4 +31,29 @@ vectorstoredb=FAISS.from_documents(documents,embedding)
 
 query = "Load multiple urls concurrently"
 result = vectorstoredb.similarity_search(query)
-result[0].page_content
+
+
+#integrated with LLM 
+from langchain_core.prompts import ChatPromptTemplate
+prompt = ChatPromptTemplate.from_template(
+    """
+    Answer the questions based on prompt context:
+    <context>
+    {context}
+    </context>
+    """
+)
+from langchain_openai import ChatOpenAI
+llm = ChatOpenAI(model='gpt-4o')
+
+from langchain.chains.combine_documents import create_stuff_documents_chain
+document_chain = create_stuff_documents_chain(llm,prompt)
+
+
+#retriver # create vector store as interface for document chain (runnable binding)
+retriever = vectorstoredb.as_retriever()
+from langchain.chains import create_retrieval_chain
+retrieval_chain = create_retrieval_chain(retriever,document_chain)
+
+result = retrieval_chain.invoke({"input":"Load multiple urls concurrently"})
+print(result['answer'])
